@@ -1,0 +1,9 @@
+venv/
+keras_tuner_dir/
+tuner_dir/
+
+database_risco_inadimplencia_100k.xlsx
+empresas_credito_200k_justificativa.csv
+ggml-gpt4all-j-v1.3-groovy.bin
+relatorio_credito_1000amostras.pdf
+relatorio_risco_empresas.pdf
