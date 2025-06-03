@@ -1,9 +1,103 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+.venv/
 venv/
+ENV/
+env/
+
+# Cache dirs
+cache/
+pycache/
+
+# Keras Tuner directories
 keras_tuner_dir/
 tuner_dir/
 
-database_risco_inadimplencia_100k.xlsx
-empresas_credito_200k_justificativa.csv
-ggml-gpt4all-j-v1.3-groovy.bin
-relatorio_credito_1000amostras.pdf
-relatorio_risco_empresas.pdf
+# Environment variables file
+.env
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints
+
+# VS Code settings (opcional)
+.vscode/
+
+# Logs and databases
+*.log
+*.sqlite3
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# PyInstaller
+#  Usually these files are written by a python script from a template
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+
+# Pytest cache
+.pytest_cache/
+
+# mypy
+.mypy_cache/
+
+# Pyre type checker
+.pyre/
+
+# Pytype static type analyzer
+.pytype/
+
+# Cython debug symbols
+cython_debug/
+
+# Data files
+*.csv
+*.xlsx
+*.xls
+
+# Large binary files (like ggml-gpt4all-j-v1.3-groovy.bin)
+*.bin
+
+# PDF reports (gerados)
+*.pdf
+
+# Outros arquivos temporários ou de backup
+*~
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
