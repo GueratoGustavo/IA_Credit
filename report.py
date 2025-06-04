@@ -11,20 +11,19 @@ logging.basicConfig(level=logging.INFO)
 
 
 class CreditPDFReport(FPDF):
-    """
-    Classe para geração de relatório em PDF com:
-    - Classe prevista e probabilidades
-    - Justificativa textual (LLM)
-    - Gráfico SHAP explicativo
-    """
+    def __init__(self):
+        super().__init__()
+        # Fonte padrão do FPDF, já registrada
+        self.set_font("helvetica", size=12)
 
     def header(self):
-        self.set_font("Arial", "B", 12)
+        self.set_font("helvetica", "B", 14)
         self.cell(0, 10, "Relatório de Predição de Risco - Empresa", ln=True, align="C")
+        self.ln(5)
 
     def footer(self):
         self.set_y(-15)
-        self.set_font("Arial", "I", 8)
+        self.set_font("helvetica", "I", 8)
         self.cell(0, 10, f"Página {self.page_no()}", align="C")
 
     def add_prediction_page(
@@ -37,20 +36,8 @@ class CreditPDFReport(FPDF):
         feature_names: List[str],
         output_dir: Optional[str] = None,
     ):
-        """
-        Adiciona uma página ao PDF com os dados da previsão de risco de crédito.
-
-        Args:
-            idx (int): Índice da amostra.
-            classe_predita (str): Classe prevista (ex: "Alto Risco").
-            prob (np.ndarray): Probabilidades de cada classe.
-            justificativa_text (str): Texto gerado pela LLM explicando a decisão.
-            shap_vals (np.ndarray): Valores SHAP da amostra.
-            feature_names (List[str]): Nomes das features para o gráfico SHAP.
-            output_dir (Optional[str]): Diretório para salvar a imagem temporária.
-        """
         self.add_page()
-        self.set_font("Arial", size=12)
+        self.set_font("helvetica", size=12)
         self.cell(
             0, 10, f"Empresa {idx + 1} - Classe Prevista: {classe_predita}", ln=True
         )
@@ -71,12 +58,6 @@ class CreditPDFReport(FPDF):
         idx: int,
         output_dir: Optional[str] = None,
     ) -> Optional[str]:
-        """
-        Gera e salva o gráfico SHAP como imagem temporária.
-
-        Returns:
-            Caminho da imagem gerada ou None em caso de erro.
-        """
         try:
             output_dir = output_dir or os.getcwd()
             img_name = f"shap_plot_{idx}.png"
@@ -101,9 +82,16 @@ class CreditPDFReport(FPDF):
             return None
 
     def _remove_temp_image(self, img_path: str):
-        """Remove imagem temporária do SHAP plot."""
         try:
             if os.path.exists(img_path):
                 os.remove(img_path)
         except Exception as e:
             logger.warning(f"Erro ao remover imagem temporária: {e}")
+
+    def save_pdf(self, path: str):
+        """Salva o PDF no caminho especificado."""
+        try:
+            self.output(path)
+            logger.info(f"PDF salvo com sucesso em: {path}")
+        except Exception as e:
+            logger.error(f"Erro ao salvar o PDF: {e}")

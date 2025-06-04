@@ -8,11 +8,10 @@ from tensorflow.keras.layers import (
     Dropout,
     BatchNormalization,
 )
+from kerastuner import HyperParameters  # só para importar o tipo hp
 
 
-def build_model(
-    hp, num_portes: int, num_features_len: int, text_embedding_dim: int
-) -> Model:
+def build_model(hp, num_portes: int, num_features_len: int, text_embedding_dim: int) -> Model:
     """
     Constrói o modelo Keras combinando:
         - Embedding do porte da empresa
@@ -21,22 +20,18 @@ def build_model(
     Arquitetura definida via KerasTuner 
     (hiperparâmetros: número de layers, units, dropout, embedding_dim).
     """
-    # Entradas     # Entradas\xa0
     entrada_porte = Input(shape=(1,), name="porte_input")
     entrada_num = Input(shape=(num_features_len,), name="num_input")
     entrada_text = Input(shape=(text_embedding_dim,), name="text_input")
 
-    # Embedding para 'porte'
     emb_dim = hp.Int("embedding_dim", 4, 16, step=4)
     emb_porte = Embedding(
         input_dim=num_portes + 1, output_dim=emb_dim
     )(entrada_porte)
     porte_flat = Flatten()(emb_porte)
 
-    # Concatenate: porte_flat + num_features + texto
     x = Concatenate()([porte_flat, entrada_num, entrada_text])
 
-    # Camadas densas definidas pelo KerasTuner
     for i in range(hp.Int("n_layers", 1, 3)):
         units = hp.Int(f"units_{i}", 32, 256, step=32)
         x = Dense(units, activation="relu")(x)
