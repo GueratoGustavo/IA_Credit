@@ -1,3 +1,4 @@
+import torch
 import os
 import logging
 import numpy as np
@@ -17,6 +18,8 @@ from report import CreditPDFReport
 from grok3_explainer import generate_grok3_response
 from pinecone_utils import get_or_create_index
 from kerastuner import HyperParameters
+
+torch.classes.__path__ = []
 
 
 logging.basicConfig(
